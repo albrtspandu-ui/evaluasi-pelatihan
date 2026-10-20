@@ -200,7 +200,7 @@ details.raw .tools{ margin-top:6px; }
 .r-know-h{ font-weight:700; font-size:calc(9.5px * var(--k)); margin-top:calc(12px * var(--k)); }
 .r-text.know{ margin-top:calc(8px * var(--k)); }
 .r-placeholder{ color:#9A9A9A; font-style:italic; }
-.r-foot{ flex:none; margin-top:10px; background:#A6A6A6; text-align:center; font-size:8.5px; padding:4px 10px; line-height:1.45; }
+.r-foot{ flex:none; margin-top:10px; background:#A6A6A6; text-align:center; font-size:9px; padding:5px 10px; line-height:1.45; }
 .r-foot b{ display:block; }
 .r-empty{ display:flex; align-items:center; justify-content:center; height:100%; color:#999; font-size:15px; text-align:center; padding:40px; }
 
@@ -237,8 +237,12 @@ details.raw .tools{ margin-top:6px; }
       <div class="step-head"><div class="step-num">2</div><h2>Keterangan pelatihan</h2></div>
       <div class="step-body">
         <div class="field">
-          <label for="fJudul">Judul pelatihan</label>
-          <input type="text" id="fJudul" placeholder="Judul Pelatihan">
+          <label for="fProgram">Nama program</label>
+          <input type="text" id="fProgram" placeholder="Nama Program">
+        </div>
+        <div class="field">
+          <label for="fJudul">Nama pelatihan</label>
+          <input type="text" id="fJudul" placeholder="Nama Pelatihan">
         </div>
         <div class="field">
           <label for="fTrainer">Nama fasilitator</label>
@@ -483,7 +487,7 @@ async function handleFile(file){
 /* =========================================================
    KETERANGAN
    ========================================================= */
-["fJudul","fTrainer","fTanggal","fDurasi","fCoord"].forEach(id => $(id).addEventListener("input", render));
+["fProgram","fJudul","fTrainer","fTanggal","fDurasi","fCoord"].forEach(id => $(id).addEventListener("input", render));
 $("fDatePick").addEventListener("change", e => {
   const v = e.target.value; if (!v) return;
   const [y,m,d] = v.split("-").map(Number);
@@ -653,7 +657,7 @@ function aiPayload(mode){
   const pack = (list) => uniqueComments(list).map(c => c.text + (c.n > 1 ? " (" + c.n + " orang)" : ""));
   return {
     mode,
-    title: $("fJudul").value.trim(),
+    title: [$("fProgram").value.trim(), $("fJudul").value.trim()].filter(Boolean).join(" - "),
     averages: { A: round2(d.results[0].groupAvg), B: round2(d.results[1].groupAvg), C: round2(d.results[2].groupAvg) },
     comments: { A: pack(d.results[0].comments), B: pack(d.results[1].comments), C: pack(d.results[2].comments), know: pack(d.knowledge) }
   };
@@ -792,10 +796,12 @@ function render(){
 
   let html = '<div class="r-body"><div class="r-content" id="rContent">' +
     '<div class="r-logo"><img src="' + CONFIG.logo + '" alt="MDS Retailing"></div>' +
-    '<div class="r-title"><div>EVALUASI PELATIHAN</div><div class="t2">' + val("fJudul","Judul pelatihan") + '</div></div>' +
+    '<div class="r-title"><div>EVALUASI PELATIHAN</div></div>' +
     '<table class="r-info">' +
+      '<tr><td>Nama Program</td><td>: ' + val("fProgram","…") + '</td></tr>' +
+      '<tr><td>Nama Pelatihan</td><td>: ' + val("fJudul","…") + '</td></tr>' +
       '<tr><td>Nama Fasilitator</td><td>: ' + val("fTrainer","…") + '</td></tr>' +
-      '<tr><td>Hari / Tanggal</td><td>: ' + val("fTanggal","…") + '</td></tr>' +
+      '<tr><td>Hari, Tanggal</td><td>: ' + val("fTanggal","…") + '</td></tr>' +
       '<tr><td>Durasi Pelatihan</td><td>: ' + val("fDurasi","…") + '</td></tr>' +
       '<tr><td>Training Coordinator</td><td>: ' + val("fCoord","…") + '</td></tr>' +
     '</table>' +
@@ -817,7 +823,7 @@ function render(){
   }
 
   html += '</div></div>' +
-    '<div class="r-foot">Lembar evaluasi ini sudah diketahui dan diverifikasi oleh Head of Learning &amp; Development serta sah tanpa tanda tangan<b>HR-Learning &amp; Development Department</b></div>';
+    '<div class="r-foot"><b>HR-Learning &amp; Development Department</b></div>';
 
   page.innerHTML = html;
   fitToPage();
@@ -891,7 +897,7 @@ $("btnPDF").addEventListener("click", async () => {
     const img = canvas.toDataURL("image/jpeg", 0.95);
     const pdf = new window.jspdf.jsPDF({ unit:"mm", format:"a4", orientation:"portrait", compress:true });
     pdf.addImage(img, "JPEG", 0, 0, 210, 297);
-    const judul = ($("fJudul").value.trim() || "Pelatihan").replace(/[\\/:*?"<>|]+/g, "").replace(/\s+/g, "_");
+    const judul = ([$("fProgram").value.trim(), $("fJudul").value.trim()].filter(Boolean).join(" ") || "Pelatihan").replace(/[\\/:*?"<>|]+/g, "").replace(/\s+/g, "_");
     pdf.save("Evaluasi_" + judul + ".pdf");
   } catch (err) {
     console.error(err);
