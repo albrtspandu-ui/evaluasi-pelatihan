@@ -237,33 +237,31 @@ details.raw .tools{ margin-top:6px; }
       <div class="step-head"><div class="step-num">2</div><h2>Keterangan pelatihan</h2></div>
       <div class="step-body">
         <div class="field">
-          <label for="fProgram">Nama program</label>
+          <label for="fProgram">Program</label>
           <input type="text" id="fProgram" placeholder="Nama Program">
         </div>
         <div class="field">
-          <label for="fJudul">Nama pelatihan</label>
-          <input type="text" id="fJudul" placeholder="Nama Pelatihan">
+          <label for="fJudul">Materi</label>
+          <input type="text" id="fJudul" placeholder="Nama Materi">
         </div>
         <div class="field">
-          <label for="fTrainer">Nama fasilitator</label>
-          <input type="text" id="fTrainer" placeholder="Nama trainer">
-        </div>
-        <div class="field">
-          <label for="fTanggal">Hari / tanggal <span class="sub">— pilih dari kalender atau ketik sendiri</span></label>
+          <label for="fTanggal">Hari, tanggal <span class="sub">— pilih dari kalender atau ketik sendiri</span></label>
           <div class="date-row">
             <input type="text" id="fTanggal" placeholder="Hari, Tanggal">
             <input type="date" id="fDatePick" aria-label="Pilih tanggal dari kalender" title="Pilih dari kalender">
           </div>
         </div>
-        <div class="row2">
-          <div class="field">
-            <label for="fDurasi">Durasi pelatihan</label>
-            <input type="text" id="fDurasi" placeholder="8 Jam">
-          </div>
-          <div class="field">
-            <label for="fCoord">Training coordinator</label>
-            <input type="text" id="fCoord" placeholder="Nama coordinator">
-          </div>
+        <div class="field">
+          <label for="fDurasi">Durasi</label>
+          <input type="text" id="fDurasi" placeholder="8 Jam">
+        </div>
+        <div class="field">
+          <label for="fTrainer">Fasilitator</label>
+          <input type="text" id="fTrainer" placeholder="Nama Fasilitator">
+        </div>
+        <div class="field">
+          <label for="fCoord">Training Coordinator</label>
+          <input type="text" id="fCoord" placeholder="Nama Training Coordinator">
         </div>
       </div>
     </div>
@@ -798,11 +796,11 @@ function render(){
     '<div class="r-logo"><img src="' + CONFIG.logo + '" alt="MDS Retailing"></div>' +
     '<div class="r-title"><div>EVALUASI PELATIHAN</div></div>' +
     '<table class="r-info">' +
-      '<tr><td>Nama Program</td><td>: ' + val("fProgram","…") + '</td></tr>' +
-      '<tr><td>Nama Pelatihan</td><td>: ' + val("fJudul","…") + '</td></tr>' +
-      '<tr><td>Nama Fasilitator</td><td>: ' + val("fTrainer","…") + '</td></tr>' +
+      '<tr><td>Program</td><td>: ' + val("fProgram","…") + '</td></tr>' +
+      '<tr><td>Materi</td><td>: ' + val("fJudul","…") + '</td></tr>' +
       '<tr><td>Hari, Tanggal</td><td>: ' + val("fTanggal","…") + '</td></tr>' +
-      '<tr><td>Durasi Pelatihan</td><td>: ' + val("fDurasi","…") + '</td></tr>' +
+      '<tr><td>Durasi</td><td>: ' + val("fDurasi","…") + '</td></tr>' +
+      '<tr><td>Fasilitator</td><td>: ' + val("fTrainer","…") + '</td></tr>' +
       '<tr><td>Training Coordinator</td><td>: ' + val("fCoord","…") + '</td></tr>' +
     '</table>' +
     '<div class="r-legend"><div class="lbl">Arti Nilai Yang Diperoleh:</div>' +
