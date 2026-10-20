@@ -1,0 +1,6 @@
+{
+  "name": "evaluasi-pelatihan",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=20" }
+}
